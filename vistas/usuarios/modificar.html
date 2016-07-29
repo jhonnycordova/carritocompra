@@ -1,0 +1,65 @@
+
+<input type="hidden" id="id" name="id" value="{id}">
+	<div class="control-group">
+		<label class="control-label" for="usuario">Usuario * </label>
+		<div class="controls">
+		    <div class="input-append">
+		    <input type="text" id="usuario" name="usuario" placeholder="usuario" value="{usuario}">
+		    <button class="btn btn-primary" type="button" id="buscar" data-placement="bottom" data-toggle="tooltip" title="Buscar usuario para poder modificar">Buscar</button>
+		    </div>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="clave">Tipo Usuario * </label>
+		<div class="controls">
+			<select name="tipo" id="tipo">
+				<option value="A" {A}>Administrador</option>
+				<option value="B" {B}>Basico</option>
+			</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="clave">Status * </label>
+		<div class="controls">
+			<select name="status" id="status">
+				<option value="A" {Ac}>Activo</option>
+				<option value="I" {In}>Inactivo</option>
+			</select>
+		</div>
+	</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+$('button').tooltip();
+
+$('select').select2();
+$('#buscar').click(function() {
+var usuario = $('#usuario').val();
+var id = $('#id').val();
+if(usuario != ''){
+    $.getJSON('/proyecto/usuarios/buscarUsuarioEditar/?usuario='+usuario+'&id='+id, function(data) {
+    	$.each( data , function(k, v){
+    		if(v.resp == false){
+    			$('#usuario').attr({
+					readonly: 'true'
+				});
+				$('#registrar').attr({
+					disabled : false
+				});
+    		}else if(v.resp == true){
+    			window.alert('Nombre de usuario en uso, intente con otro!!!');
+    			$('#usuario').focus();
+    		}
+    	});
+    }).error(function(data) {
+        window.alert('Error: ' + data.responseText);
+    });
+}else{
+	window.alert('Falta Nombre de Usuario');
+}
+
+});
+
+});
+</script>

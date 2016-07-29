@@ -1,0 +1,86 @@
+<div class="well well-small">
+<form class="form-horizontal" method="POST" action="/proyecto/usuarios/crear/">
+	<div class="control-group">
+		<label class="control-label" for="usuario">Usuario * </label>
+		<div class="controls">
+		    <div class="input-append">
+		    <input type="text" id="usuario" name="usuario" placeholder="usuario">
+		    <button class="btn btn-primary" type="button" id="buscar">Buscar</button>
+		    </div>
+		</div>
+	</div>
+	<div id="datos" style="display:none;">
+		<div class="control-group">
+		<label class="control-label" for="clave">Password * </label>
+		<div class="controls">
+			<input type="password" id="clave" name="clave" placeholder="clave de usuario">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="clave">Tipo Usuario * </label>
+		<div class="controls">
+			<select name="tipo" id="tipo">
+				<option value="A">Administrador</option>
+				<option value="B">Basico</option>
+			</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="clave">Status * </label>
+		<div class="controls">
+			<select name="status" id="status">
+				<option value="A">Activo</option>
+				<option value="I">Inactivo</option>
+			</select>
+		</div>
+	</div>
+	</div>
+	<div class="form-actions">
+		<button  type="submit" id="registrar" class="btn btn-primary">Registrar</button>
+		<a href="/proyecto/usuarios/registrar/" class="btn">Cancelar</a>
+		<a href="/proyecto/usuarios/verdatos/" class="btn">Ir a Tabla</a>
+	</div>
+</form>
+
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+$('select').select2();
+
+$('#registrar').attr({
+	disabled: true
+});
+
+$('#buscar').click(function() {
+var usuario = $('#usuario').val();
+if(usuario != ''){
+    $.getJSON('/proyecto/usuarios/buscarUsuario/?usuario='+usuario, function(data) {
+    	$.each( data , function(k, v){
+    		if(v.resp == false){
+    			$('#usuario').attr({
+					readonly: 'true'
+				});
+				$('#registrar').attr({
+					disabled : false
+				});
+				$('#datos').show('slow/2000/fast');
+    		}else if(v.resp == true){
+    			window.alert('Nombre de usuario en uso, intente con otro!!!');
+    			$('#usuario').focus();
+    		}
+    	});
+    }).error(function(data) {
+        window.alert('Error: ' + data.responseText);
+    });
+}else{
+	window.alert('Falta Nombre de Usuario');
+}
+
+});
+
+});
+</script>
+

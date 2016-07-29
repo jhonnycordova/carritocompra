@@ -1,0 +1,80 @@
+
+<!-- Slider -->
+<div class="span12" id="slider">
+        <!-- Top part of the slider -->
+    <div class="row">
+        <div class="span8" id="carousel-bounding-box">
+            <div class="carousel slide" id="myCarousel">
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    {carouselItems}
+                </div><!-- Carousel nav -->
+                <a class="carousel-control left" data-slide="prev" href="#myCarousel">‹</a> <a class="carousel-control right" data-slide="next" href="#myCarousel">›</a>
+            </div>
+        </div>
+
+        <div class="span4" id="carousel-text"></div>
+
+        <div id="slide-content" style="display: none;">
+            {carouselText}
+        </div>
+    </div>
+</div>
+
+<div class="row hidden-phone" id="slider-thumbs">
+    <div class="span12">
+        <!-- Bottom switcher of slider -->
+
+        <ul class="thumbnails">
+            {listaImagenes}
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+        $('#myCarousel').carousel({
+                interval: 0
+        });
+
+        $('#carousel-text').html($('#slide-content-0').html());
+
+        //Handles the carousel thumbnails
+        $('[id^=carousel-selector-]').click( function(){
+                var id_selector = $(this).attr("id");
+                var id = id_selector.substr(id_selector.length -1);
+                var id = parseInt(id);
+                $('#myCarousel').carousel(id);
+        });
+
+
+        // When the carousel slides, auto update the text
+        $('#myCarousel').on('slid', function (e) {
+                var id = $('.item.active').data('slide-number');
+                $('#carousel-text').html($('#slide-content-'+id).html());
+        });
+
+     /*   $('#comprar').click(function() {
+            var precio = $('#precio').val();
+            var producto_id = $('#producto_id').val();
+            var cantidad = $('#cantidad').val();
+            $.getJSON('/proyecto/carrito/crear/?producto_id='+producto_id+'&cantidad='+cantidad+'&precio='+precio, function(data) {
+            $.each( data , function(k, v){
+            if(v.resp == false){
+                window.alert('Error no se agrego al Carrito!!!');
+                window.location.reload();
+            }else if(v.resp == true){
+                window.alert('Agregado al Carrito!!!');
+                window.location.reload();
+            }
+        });
+            }).error(function(data) {
+                window.alert('Error: ' + data.responseText);
+            });
+        });
+*/
+
+
+});
+</script>

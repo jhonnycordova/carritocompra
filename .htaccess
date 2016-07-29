@@ -1,0 +1,17 @@
+RewriteBase /proyecto/
+RewriteEngine On
+
+RewriteRule ^$ controladores/Control_login.php
+RewriteRule ^login/ controladores/Control_login.php
+
+RewriteRule ^inicio/ controladores/Control_inicio.php
+
+RewriteRule ^usuarios/ controladores/Control_usuarios.php
+
+RewriteRule ^imagenes/ controladores/Control_imagenes.php
+
+RewriteRule ^inventario/ controladores/Control_inventario.php
+
+RewriteRule ^carrito/ controladores/Control_carrito.php
+
+RewriteRule ^facturas/ controladores/Control_facturas.php

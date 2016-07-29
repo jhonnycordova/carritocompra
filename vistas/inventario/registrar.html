@@ -1,0 +1,68 @@
+<div class="well well-small">
+	<form class="form-horizontal" id="form-validar" method="POST" action="/proyecto/inventario/crear/">
+
+		<div class="control-group">
+			<label class="control-label" for="producto_id">Codigo de Producto * </label>
+			<div class="controls">
+			    <select name="producto_id" id="producto_id" class="span10">
+					<option value="0">Seleccione un producto</option>
+					{productos}
+				</select>
+			</div>
+		</div>
+
+		<div style="display:none;" id="datos">
+		<div class="control-group">
+			<label class="control-label" for="cantidad">Cantidad * </label>
+			<div class="controls">
+				<input type="text" name="cantidad" id="cantidad" placeholder="cantidad" maxlength="8">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="precio">Precio Bs * </label>
+			<div class="controls">
+			    <input type="text" name="precio" id="precio" placeholder="Precio Bs" maxlength="11">
+			</div>
+		</div>
+		</div>
+		<div class="form-actions">
+			<button  type="submit" id="registrar" class="btn btn-primary">Registrar</button>
+			<a href="/proyecto/inventario/registrar/" class="btn">Cancelar</a>
+			<a href="/proyecto/inventario/verdatos/" class="btn">Ir a Tabla</a>
+		</div>
+	</form>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+//Para escribir solo numeros
+$('#cantidad').validCampo('0123456789');
+$('#precio').validCampo('0123456789,');
+
+$('select').select2();
+
+$('#registrar').attr({
+	disabled: true
+});
+
+$('#producto_id').change(function() {
+	var id = $(this).val();
+	if(id != 0){
+		$('#datos').show('slow/2000/fast');
+		$('#registrar').attr({
+			disabled : false
+		});
+	}else{
+		$('#registrar').attr({
+			disabled: true
+		});
+		$('#datos').hide('slow/2000/fast');
+	}
+});
+
+
+});
+</script>
+
